@@ -2,6 +2,7 @@ import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
 
+@UseGuards(AuthGuard('google'))
 @Controller('auth')
 export class AuthController {
   @Get('test')
@@ -9,17 +10,18 @@ export class AuthController {
     return process.env.JWT_SECRET;
   }
   @Get('google')
-  @UseGuards(AuthGuard('google'))
   async googleAuth(@Req() req) {
     console.log('REQ', req);
   }
 
   @Get('google/callback')
-  @UseGuards(AuthGuard('google'))
   async googleAuthRedirect(@Req() req, @Res() res: Response) {
     const jwtToken = req.user.jwt;
-    console.log('USER', req.user);
-    res.cookie('token', jwtToken);
-    return res.status(200).redirect(process.env.CLIENT_URL);
+    res.cookie('token', jwtToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 3600000,
+    });
+    return res.redirect(process.env.CLIENT_URL);
   }
 }

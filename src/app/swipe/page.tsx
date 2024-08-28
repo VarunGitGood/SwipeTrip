@@ -5,6 +5,7 @@ import { motion, useAnimation } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { X, Check, MapPin, User, CheckCircle2, PlaneTakeoff } from 'lucide-react'
+import Image from 'next/image'
 
 const travelPreferences = [
   { id: 1, category: 'Accommodation', option: 'Luxury Hotel', image: '/placeholder.svg?height=400&width=300' },
@@ -83,7 +84,7 @@ export default function Swipe() {
                 className="cursor-grab active:cursor-grabbing"
               >
                 <div className="relative">
-                  <img src={currentCard.image} alt={currentCard.option} className="w-full h-[calc(100vh-24rem)] object-cover" />
+                  <Image src={currentCard.image} alt={currentCard.option} className="w-full h-[calc(100vh-24rem)] object-cover" width={100} height={100}/>
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
                     <h3 className="text-white text-2xl font-semibold">{currentCard.category}</h3>
                     <p className="text-white text-xl mt-2">{currentCard.option}</p>
@@ -105,7 +106,7 @@ export default function Swipe() {
 
           <Card className="w-full lg:w-1/3 bg-white rounded-xl shadow-lg overflow-hidden">
             <CardHeader>
-              <CardTitle className="text-xl font-semibold text-gray-800">Preferences</CardTitle>
+              <CardTitle className="text-xl font-semibold text-gray-800">Categories</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="space-y-3">

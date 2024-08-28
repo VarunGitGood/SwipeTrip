@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -21,13 +21,15 @@ import {
 } from "@/components/ui/select";
 import { MapPin, ArrowRight, Shuffle } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Preferences } from ".";
+import axios from "axios";
 
 const totalSteps = 4;
 
 export default function Dashboard() {
-  const router = useRouter()
+  const router = useRouter();
   const [step, setStep] = useState(1);
-  const [preferences, setPreferences] = useState({
+  const [preferences, setPreferences] = useState<Preferences>({
     budget: "",
     location: "",
     travelStyle: "",
@@ -35,7 +37,7 @@ export default function Dashboard() {
     activities: "",
   });
 
-  const handleInputChange = (e:any) => {
+  const handleInputChange = (e: any) => {
     setPreferences({ ...preferences, [e.target.name]: e.target.value });
   };
 
@@ -47,10 +49,15 @@ export default function Dashboard() {
     setStep(step + 1);
   };
 
-  const startSwiping = () => {
-    console.log("Starting swiping with preferences:", preferences);
-    // Here you would typically navigate to the swiping interface or trigger the next part of your app
-    router.push('/swipe')
+  const startSwiping = async () => {
+    try {
+      console.log("Starting swiping with preferences:", preferences);
+      const result = await axios.patch("/api/user", preferences);
+      console.log("User preferences updated:", result.data);
+      router.push("/swipe");
+    } catch (error) {
+      console.error("Error :", error);
+    }
   };
 
   return (
@@ -74,7 +81,9 @@ export default function Dashboard() {
             <CardTitle className="text-2xl font-bold text-center text-gray-800">
               Let&apos;s Get to Know You
             </CardTitle>
-            <p className=" text-sm text-center text-gray-400">These preferences can be changed later on</p>
+            <p className=" text-sm text-center text-gray-400">
+              These preferences can be changed later on
+            </p>
             <div className="text-center text-sm text-gray-500 mt-2">
               Step {step} of {totalSteps}
             </div>
