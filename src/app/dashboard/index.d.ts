@@ -1,7 +1,7 @@
 export interface Preferences {
-    budget: string;
-    location: string;
-    travelStyle: string;
-    accommodation: string;
-    activities: string;
-  }
+  budget: string;
+  location: string;
+  travelExperience: string;
+  tripPace: string;
+  travelCompanions: string;
+}

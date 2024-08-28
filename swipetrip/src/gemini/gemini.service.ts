@@ -44,7 +44,7 @@ export class GeminiService {
       process.env.GOOGLE_API_KEY,
     );
     this.generativeModel = this.googleGenerativeAI.getGenerativeModel({
-      model: 'gemini-1.5-pro',
+      model: 'gemini-1.5-flash',
       generationConfig: {
         responseMimeType: 'application/json',
       },
@@ -55,6 +55,7 @@ export class GeminiService {
     const response = await this.generativeModel.generateContent(
       PROMPT + prompt,
     );
-    return response.response.text();
+    const text = await response.response.text();
+    return text;
   }
 }

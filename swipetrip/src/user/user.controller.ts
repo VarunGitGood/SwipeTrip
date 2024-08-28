@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Patch,
+  Post,
   Req,
   Res,
   UseGuards,
@@ -12,7 +13,7 @@ import { GeminiService } from '../gemini/gemini.service';
 import { User } from './user.schema';
 import { AuthGuard } from '@nestjs/passport';
 
-@UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard('JWT'))
 @Controller('user')
 export class UserController {
   constructor(
@@ -22,7 +23,17 @@ export class UserController {
 
   @Get('test')
   async test(@Req() rq, @Res() rs) {
-    rs.json(rq.user);
+    if (rq.user) {
+      rs.json(rq.user);
+      return;
+    }
+    return rs.status(401).send('Unauthorized');
+  }
+
+  @Get()
+  async getUser(@Req() rq, @Res() rs) {
+    const user = await this.userService.findOneByEmail(rq.user.email);
+    rs.json(user);
   }
 
   @Patch()
@@ -31,11 +42,12 @@ export class UserController {
     rs.json(user);
   }
 
-  @Get()
-  async generateItinary(@Req() rq, @Res() rs) {
+  @Post('itinary')
+  async generateItinary(@Req() rq, @Res() rs, @Body() body) {
+    const { preferences } = body;
     const user: User = await this.userService.findOneByEmail(rq.user.email);
     const itinary = await this.geminiService.generateText(
-      JSON.stringify(user.preferences),
+      JSON.stringify(user.preferences + '\n' + preferences),
     );
     rs.json(itinary);
   }
