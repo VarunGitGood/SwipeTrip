@@ -26,6 +26,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import useAuthRedirect from "../../hooks/useAuthRedirect";
 import LoadingAnimation from "../../components/ui/loading";
+import { Navbar } from "@/components/ui/navbar";
 
 interface Activity {
   name: string;
@@ -184,28 +185,7 @@ export default function Swipe() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex-shrink-0 flex items-center">
-              <MapPin className="h-8 w-8 text-yellow-400" />
-              <span className="ml-2 text-2xl font-bold text-gray-800">
-                SwipeTrip
-              </span>
-            </div>
-            <div className="flex items-center">
-              <Button
-                variant="ghost"
-                className="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium ml-4"
-              >
-                <User className="h-5 w-5 mr-1" />
-                Profile
-              </Button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+      <Navbar />
       {!showItinerary ? (
         <main className="flex-grow flex flex-col items-center justify-center p-4">
           <div className="flex flex-col lg:flex-row lg:space-x-8 space-y-8 lg:space-y-0 w-full max-w-6xl mb-8">

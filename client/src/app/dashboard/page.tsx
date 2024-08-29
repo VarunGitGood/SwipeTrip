@@ -25,6 +25,7 @@ import {
   SelectValue,
 } from "../../components/ui/select";
 import { SelectTrigger } from "@radix-ui/react-select";
+import { Navbar } from "@/components/ui/navbar";
 
 const totalSteps = 4;
 
@@ -229,19 +230,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex-shrink-0 flex items-center">
-              <MapPin className="h-8 w-8 text-yellow-400" />
-              <span className="ml-2 text-2xl font-bold text-gray-800">
-                SwipeTrip
-              </span>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+      <Navbar />
       <main className="flex-grow flex items-center justify-center p-4">
         <Card className="w-full max-w-lg bg-white rounded-xl shadow-lg overflow-hidden">
           <CardHeader>
