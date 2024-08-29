@@ -27,7 +27,7 @@ const LoadingAnimation = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-full">
+    <div className="flex flex-col items-center justify-center h-full mt-4">
       <div className="flex space-x-8 mb-8">
         <motion.div
           variants={iconVariants}

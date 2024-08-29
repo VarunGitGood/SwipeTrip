@@ -22,6 +22,6 @@ export class AuthController {
       secure: process.env.NODE_ENV === 'production',
       maxAge: 3600000,
     });
-    return res.redirect(process.env.CLIENT_URL);
+    return res.redirect(process.env.CLIENT_URL + '/dashboard');
   }
 }

@@ -36,10 +36,6 @@ export default function Login() {
   const handleGoogleLogin = () => {
     console.log("Initiating Google login");
     router.push(process.env.NEXT_PUBLIC_API_URL + "/auth/google");
-    // Here you would typically initiate the Google OAuth flow
-    // For example:
-    // window.location.href = 'YOUR_GOOGLE_OAUTH_URL'
-    // router.push("/dashboard");
   };
 
   return (

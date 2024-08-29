@@ -119,6 +119,8 @@ const travelPreferences = [
   },
 ];
 
+const categories = ["Accommodation", "Activities", "Dining", "Transport"];
+
 export default function Swipe() {
   const router = useRouter();
   useAuthRedirect();
@@ -369,4 +371,3 @@ export default function Swipe() {
     </div>
   );
 }
-
