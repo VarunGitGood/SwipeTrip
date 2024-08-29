@@ -10,7 +10,7 @@ SwipeTrip reimagines the way people plan their trips by introducing an interacti
 
 - **Frontend**: [Next.js](https://nextjs.org/) and [React](https://reactjs.org/)
 - **Backend**: [Nest.js](https://nestjs.com/)
-- **API**: [Gemini API](https://gemini.com/)
+- **API**: [Gemini API](https://gemini.google.com/)
 - **Deployment**:
   - Frontend: [Vercel](https://vercel.com/)
   - Backend: [Render](https://render.com/)
