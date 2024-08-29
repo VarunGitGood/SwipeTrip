@@ -25,6 +25,7 @@ import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import useAuthRedirect from "@/hooks/useAuthRedirect";
+import LoadingAnimation from "@/components/ui/loading";
 
 interface Activity {
   name: string;
@@ -126,7 +127,10 @@ export default function Swipe() {
   const controls = useAnimation();
   const constraintsRef = useRef(null);
   const [showItinerary, setShowItinerary] = useState(false);
-  const [itineraryData, setItineraryData] = useState<ItineraryData>();
+  const [itineraryData, setItineraryData] = useState<ItineraryData | null>(
+    null
+  );
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSwipe = (direction: any) => {
     const currentPreference = travelPreferences[currentCardIndex];
@@ -146,6 +150,7 @@ export default function Swipe() {
 
   const generateItinerary = async () => {
     try {
+      setLoading(true);
       console.log("Generating itinerary based on:", preferences);
       const result = await axios.post(
         process.env.NEXT_PUBLIC_API_URL + "/user/itinary",
@@ -156,7 +161,8 @@ export default function Swipe() {
           withCredentials: true,
         }
       );
-      console.log("Itinerary generated:", result.data);
+      setItineraryData(JSON.parse(result.data));
+      setLoading(false);
       setShowItinerary(true);
     } catch (error) {
       console.error("Error generating itinerary:", error);
@@ -279,13 +285,17 @@ export default function Swipe() {
             </Card>
           </div>
 
-          <Button
-            onClick={generateItinerary}
-            className="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-3 px-8 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
-          >
-            <PlaneTakeoff className="w-5 h-5 mr-2" />
-            Generate Itinerary
-          </Button>
+          {loading ? (
+            <LoadingAnimation />
+          ) : (
+            <Button
+              onClick={generateItinerary}
+              className="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-3 px-8 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
+            >
+              <PlaneTakeoff className="w-5 h-5 mr-2" />
+              Generate Itinerary
+            </Button>
+          )}
         </main>
       ) : (
         <main className="flex-grow flex flex-col items-center justify-start p-4 md:p-8">
@@ -298,46 +308,52 @@ export default function Swipe() {
             Your SwipeTrip Itinerary
           </motion.div>
 
-          <div className="w-full max-w-4xl">
-            {itineraryData?.itineraries.map((day, index) => (
-              <motion.div
-                key={day.day}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Card className="mb-8 bg-white rounded-xl shadow-lg overflow-hidden">
-                  <CardHeader className="bg-yellow-400 text-white p-4">
-                    <CardTitle className="text-2xl font-bold">
-                      Day {day.day}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-4">
-                    {day.activities.map((activity, actIndex) => (
-                      <div key={actIndex} className="mb-4 last:mb-0">
-                        <h3 className="text-xl font-semibold text-gray-800">
-                          {activity.name}
-                        </h3>
-                        <p className="text-gray-600 mt-1">
-                          {activity.description}
-                        </p>
-                        <div className="flex items-center mt-2 text-sm text-gray-500">
-                          <Clock className="h-4 w-4 mr-1" />
-                          <span className="mr-4">{activity.time}</span>
-                          <MapPin className="h-4 w-4 mr-1" />
-                          <span>{activity.location}</span>
+          {itineraryData && itineraryData?.itineraries?.length > 0 ? (
+            <div className="w-full max-w-4xl">
+              {itineraryData.itineraries.map((day, index) => (
+                <motion.div
+                  key={day.day}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Card className="mb-8 bg-white rounded-xl shadow-lg overflow-hidden">
+                    <CardHeader className="bg-yellow-400 text-white p-4">
+                      <CardTitle className="text-2xl font-bold">
+                        Day {day.day}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-4">
+                      {day.activities.map((activity, actIndex) => (
+                        <div key={actIndex} className="mb-4 last:mb-0">
+                          <h3 className="text-xl font-semibold text-gray-800">
+                            {activity.name}
+                          </h3>
+                          <p className="text-gray-600 mt-1">
+                            {activity.description}
+                          </p>
+                          <div className="flex items-center mt-2 text-sm text-gray-500">
+                            <Clock className="h-4 w-4 mr-1" />
+                            <span className="mr-4">{activity.time}</span>
+                            <MapPin className="h-4 w-4 mr-1" />
+                            <span>{activity.location}</span>
+                          </div>
                         </div>
+                      ))}
+                      <div className="mt-4 pt-4 border-t border-gray-200 flex items-center justify-end text-gray-700">
+                        <DollarSign className="h-5 w-5 mr-1" />
+                        <span>Cost for Day: {day.costForDay}</span>
                       </div>
-                    ))}
-                    <div className="mt-4 pt-4 border-t border-gray-200 flex items-center justify-end text-gray-700">
-                      <DollarSign className="h-5 w-5 mr-1" />
-                      <span>Cost for Day: ${day.costForDay}</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-600">
+              No itinerary available. Please generate one.
+            </p>
+          )}
 
           <div className="mt-8">
             <Button

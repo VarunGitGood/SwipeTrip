@@ -43,12 +43,15 @@ export class UserController {
   }
 
   @Post('itinary')
-  async generateItinary(@Req() rq, @Res() rs, @Body() body) {
+  async generateItinerary(@Req() rq, @Res() rs, @Body() body) {
     const { preferences } = body;
     const user: User = await this.userService.findOneByEmail(rq.user.email);
-    const itinary = await this.geminiService.generateText(
-      JSON.stringify(user.preferences + '\n' + preferences),
+    const userPreferencesString = JSON.stringify(user.preferences);
+    const bodyPreferencesString = JSON.stringify(preferences);
+    const combinedPreferencesString = `${userPreferencesString}_${bodyPreferencesString}`;
+    const itinerary = await this.geminiService.generateText(
+      combinedPreferencesString,
     );
-    rs.json(itinary);
+    rs.json(itinerary);
   }
 }
