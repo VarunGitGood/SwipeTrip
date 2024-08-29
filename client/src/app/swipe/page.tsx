@@ -2,14 +2,14 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
-import { Button } from "@/components/ui/button";
+import { Button } from "../../components/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "../../components/ui/card";
 import {
   X,
   Check,
@@ -24,8 +24,8 @@ import {
 import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import useAuthRedirect from "@/hooks/useAuthRedirect";
-import LoadingAnimation from "@/components/ui/loading";
+import useAuthRedirect from "../../hooks/useAuthRedirect";
+import LoadingAnimation from "../../components/ui/loading";
 
 interface Activity {
   name: string;

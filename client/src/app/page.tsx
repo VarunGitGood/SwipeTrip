@@ -2,8 +2,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "../components/ui/button";
+import { Card, CardContent } from "../components/ui/card";
 import { MapPin, Plane, Sun, Umbrella } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -64,7 +64,7 @@ export default function Login() {
             onClick={handleGoogleLogin}
             className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow flex items-center justify-center"
           >
-            <GoogleSVG /> 
+            <GoogleSVG />
             Sign in with Google
           </Button>
         </CardContent>

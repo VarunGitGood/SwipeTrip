@@ -1,29 +1,29 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "../../components/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Skeleton } from "@/components/ui/skeleton";
+} from "../../components/ui/card";
+import { Input } from "../../components/ui/input";
+import { Label } from "../../components/ui/label";
+import { Textarea } from "../../components/ui/textarea";
+import { Skeleton } from "../../components/ui/skeleton";
 import { MapPin, ArrowRight, Shuffle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Preferences } from ".";
 import axios from "axios";
-import useAuthRedirect from "@/hooks/useAuthRedirect";
+import useAuthRedirect from "../../hooks/useAuthRedirect";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectValue,
-} from "@/components/ui/select";
+} from "../../components/ui/select";
 import { SelectTrigger } from "@radix-ui/react-select";
 
 const totalSteps = 4;
