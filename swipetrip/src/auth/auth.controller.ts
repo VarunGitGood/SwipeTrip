@@ -21,6 +21,7 @@ export class AuthController {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       maxAge: 3600000,
+      sameSite: 'none',
     });
     return res.redirect(process.env.CLIENT_URL + '/dashboard');
   }
