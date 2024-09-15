@@ -3,7 +3,7 @@ import axios from "axios";
 export const validateToken = async (): Promise<boolean> => {
   try {
     const response = await axios.get(
-      process.env.NEXT_PUBLIC_API_URL_LOCAL + "/user/test",
+      process.env.NEXT_PUBLIC_API_URL + "/user/test",
       {
         withCredentials: true,
       }
