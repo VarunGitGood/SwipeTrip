@@ -247,17 +247,17 @@ export default function Swipe() {
               </CardHeader>
               <CardContent>
                 <ul className="space-y-3">
-                  {travelPreferences.map((pref) => (
-                    <li key={pref.id} className="flex items-center text-sm">
-                      {preferences[pref.category] ? (
+                  {categories.map((category:string) => (
+                    <li key={category} className="flex items-center text-sm">
+                      {preferences[category] ? (
                         <CheckCircle2 className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
                       ) : (
                         <div className="h-5 w-5 border-2 border-gray-300 rounded-full mr-2 flex-shrink-0" />
                       )}
-                      <span className="text-gray-700">{pref.category}</span>
-                      {preferences[pref.category] && (
+                      <span className="text-gray-700">{category}</span>
+                      {preferences[category] && (
                         <span className="ml-auto text-sm text-gray-500">
-                          {preferences[pref.category]}
+                          {preferences[category]}
                         </span>
                       )}
                     </li>
