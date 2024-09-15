@@ -1,20 +1,18 @@
-import type { Metadata } from "next";
+"use client";
+
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import useAuthRedirect from "@/hooks/useAuthRedirect";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "SwipeTrip",
-  description: "Let's Travel",
-};
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  useAuthRedirect();
   return (
     <html lang="en">
       <Toaster />

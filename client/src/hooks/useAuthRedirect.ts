@@ -16,26 +16,47 @@ const useAuthRedirect = () => {
           description: "Please wait...",
         });
       }
-      const isValid = await validateToken();
-      if (!isValid) {
+
+      const isValid = await new Promise((resolve) =>
+        setTimeout(async () => {
+          const result = await validateToken();
+          resolve(result);
+        }, 1500)
+      );
+
+      if (!isValid && isLogin) {
+        setTimeout(() => {
+          toast({
+            title: "Token expired",
+            description: "Please Sign In",
+          });
+        }, 500);
+      }
+
+      if (!isValid && !isLogin) {
         toast({
           title: "Token expired",
-          description: "Redirecting to login page",
+          description: "Redirecting to login page...",
         });
-        router.push("/");
+        setTimeout(() => {
+          router.push("/");
+        }, 1000);
         return;
       }
-      if (isLogin) {
+
+      if (isLogin && isValid) {
         toast({
-          title: "Signing in",
-          description: "Redirecting to dashboard",
+          title: "Welcome back!",
+          description: "Redirecting to dashboard...",
         });
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 1000);
       }
-      router.push("/dashboard");
     };
 
     checkToken();
-  }, [router, toast]);
+  }, [isLogin, router, toast]);
 };
 
 export default useAuthRedirect;

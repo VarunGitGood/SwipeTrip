@@ -13,7 +13,7 @@ import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
 import { Skeleton } from "../../components/ui/skeleton";
-import { MapPin, ArrowRight, Shuffle } from "lucide-react";
+import { ArrowRight, Shuffle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Preferences } from ".";
 import axios from "axios";
